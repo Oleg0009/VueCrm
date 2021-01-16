@@ -1,5 +1,5 @@
 <template>
-  <form class="card auth-card">
+  <form class="card auth-card" @submit="loginHandler">
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
       <div class="input-field">
@@ -39,3 +39,15 @@
     </div>
   </form>
 </template>
+<script>
+export default {
+  data:()=>({
+
+  }),
+  methods:{
+    loginHandler(){
+      
+    }
+  }
+}
+</script>>
