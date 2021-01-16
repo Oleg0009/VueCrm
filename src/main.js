@@ -1,4 +1,5 @@
 import Vue from "vue";
+import Vuelidate from "vuelidate";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import dataFilter from "@/filters/data.filter";
@@ -8,6 +9,7 @@ import 'materialize-css/dist/js/materialize.min'
 
 Vue.config.productionTip = false;
 Vue.filter('data',dataFilter);
+Vue.use(Vuelidate);
 new Vue({
   router,
   store,
