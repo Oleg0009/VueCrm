@@ -101,6 +101,11 @@ export default {
         this.$v.$touch();
         return;
       }
+      const formData = {
+        email:this.email,
+        password:this.password,
+        name:this.name
+      }
       this.$router.push('/');
     }
   }
