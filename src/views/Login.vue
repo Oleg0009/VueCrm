@@ -1,5 +1,5 @@
 <template>
-  <form class="card auth-card" @submit.prevent="loginHandler">
+  <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
       <div class="input-field">
@@ -71,7 +71,7 @@ export default {
     password:{ required , minLength: minLength(10) }
   }, 
   methods:{
-    loginHandler(){
+    submitHandler(){
       if(this.$v.$invalid){
         this.$v.$touch();
         return;
@@ -81,4 +81,4 @@ export default {
     }
   }
 }
-</script>>
+</script>
