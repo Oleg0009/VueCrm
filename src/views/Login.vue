@@ -68,19 +68,29 @@ export default {
   }),
   validations:{
     email:{ email, required },
-    password:{ required , minLength: minLength(10) }
+    password:{ required , minLength: minLength(5) }
   }, 
   mounted(){
     if(messages[this.$route.query.message])
     this.$message(messages[this.$route.query.message] );
   },
   methods:{
-    submitHandler(){
+   async submitHandler(){
       if(this.$v.$invalid){
         this.$v.$touch();
         return;
       }
-      this.$router.push('/');
+      const formData = {
+        email:this.email,
+        password:this.password
+      }
+      try{
+        await this.$store.dispatch('login',formData)
+        this.$router.push('/');
+      }catch(e){
+        
+      }
+
 
     }
   }

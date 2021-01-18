@@ -1,5 +1,4 @@
 export default function dataFilter( value, format= 'date'){
-  console.log(value)
   const options={};
 
   if( format.includes("data")){
