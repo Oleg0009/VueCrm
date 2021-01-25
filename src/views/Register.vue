@@ -106,7 +106,14 @@ export default {
         password:this.password,
         name:this.name
       }
-      this.$router.push('/');
+      try{
+        this.$store.dispatch('register',formData);
+        this.$router.push('/');
+      }catch(e){
+
+      }
+     
+    
     }
   }
 }
