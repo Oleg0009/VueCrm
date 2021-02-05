@@ -1,6 +1,5 @@
 export default function dataFilter( value, format= 'date'){
   const options={};
-
   if( format.includes("data")){
     options.day='2-digit';
     options.month='long';
