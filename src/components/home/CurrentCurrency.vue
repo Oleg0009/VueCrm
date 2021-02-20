@@ -3,10 +3,40 @@
         <div class="card light-blue bill-card">
           <div class="card-content white-text">
             <span class="card-title">Счет в валюте</span>
-            <p class="currency-line">
-              <span>12.0 Р</span>
+            <p 
+             v-for="cur of currencies"
+             :key='cur'
+             class="currency-line">
+              <span>
+                {{ getCurrency(cur) | currency(cur) }}
+              </span>
             </p>
           </div>
         </div>
       </div>
 </template>
+
+<script>
+export default {
+  props:['rates'],
+  data:()=>({
+    currencies:['UAH','USD','EUR']
+  }),
+  computed:{
+   base(){
+      console.log("rates",this.rates)
+      const currentBill = this.$store.getters.info.bill;
+      console.log(currentBill)
+      const ratesYouWantToSee = this.rates["UAH"];
+      const eurRate = this.rates["EUR"];
+      return currentBill/(ratesYouWantToSee/eurRate);
+    }
+  },
+  methods:{
+    getCurrency(currency){
+      return Math.floor(this.base * this.rates[currency])
+    }
+  }
+
+}
+</script>

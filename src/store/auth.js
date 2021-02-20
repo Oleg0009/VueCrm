@@ -6,7 +6,6 @@ export default {
       try{
        await firebase.auth().signInWithEmailAndPassword(email,password);
       }catch(e){
-        console.log(e);
         commit('setError',e);
         throw e;
       }
@@ -20,13 +19,13 @@ export default {
          name
        });
       }catch(e){
-        console.log(e);
         commit('setError',e);
         throw e;
       }
     },
     getUid(){
       const user = firebase.auth().currentUser;
+      console.log(user);
       return user ? user.uid : null
     },
     async logout({commit}){
