@@ -24,9 +24,7 @@ export default {
   }),
   computed:{
    base(){
-      console.log("rates",this.rates)
       const currentBill = this.$store.getters.info.bill;
-      console.log(currentBill)
       const ratesYouWantToSee = this.rates["UAH"];
       const eurRate = this.rates["EUR"];
       return currentBill/(ratesYouWantToSee/eurRate);
