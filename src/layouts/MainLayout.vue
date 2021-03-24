@@ -9,7 +9,7 @@
           <router-view />
         </div>
       </main>
-      <div class="fixed-action-btn">
+      <div class="fixed-action-btn" v-tooltip="'Add new category'">
         <router-link class="btn-floating btn-large blue" to="/record">
           <i class="large material-icons">add</i>
         </router-link>
@@ -25,6 +25,8 @@ import Sidebar from '@/components/apps/Sidebar';
 
 import Loader from '@/components/apps/Loader';
 
+import messages from '@/utils/messages';
+
 export default {
   name:'main-layout',
   data:()=>({
@@ -36,6 +38,16 @@ export default {
       await this.$store.dispatch('fetchInfo');
     }
        this.loading = false;
+  },
+   computed:{
+    error(){
+      return this.$store.getters.error;
+    }
+  },
+  watch:{
+    error(fbError){
+       return this.$error(messages[fbError.code] || 'Something went wrong');
+    }
   },
   components:{
     Navbar,

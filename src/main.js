@@ -9,6 +9,8 @@ import router from "./router";
 import store from "./store";
 import 'materialize-css/dist/js/materialize.min'
 
+import tooltipDirectives from "@/directives/tooltip.directives";
+
 import loader from '@/components/apps/Loader';
 import firebase from "firebase/app";
 import 'firebase/auth';
@@ -19,7 +21,9 @@ Vue.filter('data',dataFilter);
 Vue.filter('currency',currencyFilter);
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
-Vue.component('Loader',loader)
+Vue.component('Loader',loader);
+Vue.directive('tooltip',tooltipDirectives)
+
 
 
 firebase.initializeApp({
