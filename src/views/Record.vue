@@ -3,8 +3,8 @@
   <div class="page-title">
     <h3>Новая запись</h3>
   </div>
-  <p v-if="!categories.length" class="center">No categories yet.<router-link to="/categories"> Add new category</router-link></p>
-  <Loader v-else-if="loading"/>
+  <Loader v-if="loading"/>
+  <p v-else-if="!categories.length" class="center">No categories yet.<router-link to="/categories"> Add new category</router-link></p>
   <form @submit.prevent="submitHandler"  v-else class="form">
        <div class="input-field" >
           <select ref="select" v-model="category">
