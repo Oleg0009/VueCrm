@@ -28,18 +28,16 @@ export default {
   }),
   async mounted(){
     this.categories = await this.$store.dispatch('fetchCategories');
-    const records = await this.$store.dispatch('fetchRecords')
-
+    const records = await this.$store.dispatch('fetchRecords');
+    console.log(records)
     this.records = records.map((record,indx)=>{
       return{
         ...record,
         categoryName: this.categories.find(c => c.id === record.categoryId).title,
-        id:indx+1,
         typeClass: record.type === "outcome" ? "red" : "green",
         typeText: record.type === "outcome" ? "Outcome" : "Income"
       }
     })
-    console.log( this.records);
     this.loading = false;
   },
   components:{

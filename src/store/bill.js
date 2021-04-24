@@ -6,7 +6,6 @@ export default {
     async changeBill({dispatch,commit}, bill){
       try{
         const userId = await dispatch('getUid');
-        console.log(bill)
         await firebase.database().ref(`/users/${userId}/info`).update({bill});
       }
       catch(e){
@@ -17,8 +16,23 @@ export default {
     async fetchRecords({dispatch,commit}){
       try{
         const userId = await dispatch('getUid');
-        const records = (await firebase.database().ref(`/users/${userId}/records`).once('value')).val();
-        return Object.keys(records).map( key => ({...records[key],id:key}));
+        const records = (await firebase.database().ref(`/users/${userId}/records`).once('value')).val();  
+        console.log(records);
+        return Object.keys(records).map( key => {
+             console.log(key);
+             return {...records[key],id:key}
+        });
+      }
+      catch(e){
+        commit('setError',e);
+        throw e
+      }
+    },
+    async fetchRecordById({dispatch,commit},id){
+      try{
+        const userId = await dispatch('getUid');
+        const record = (await firebase.database().ref(`/users/${userId}/records`).child(id).once('value')).val();
+        return {...record,id};
       }
       catch(e){
         commit('setError',e);
@@ -28,7 +42,6 @@ export default {
     async createRecord({dispatch,commit}, record){
       try{
         const userId = await dispatch('getUid');
-        console.log(record)
         return await firebase.database().ref(`/users/${userId}/records`).push(record);
       }
       catch(e){

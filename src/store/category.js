@@ -6,9 +6,22 @@ export default {
         try{
           const userId = await dispatch('getUid');
           const categories = (await firebase.database().ref(`/users/${userId}/categories`).once('value')).val();
-          console.log(categories)
           if(categories)
           return Object.keys(categories).map( key => ({...categories[key],id:key}));
+          else
+          return []
+        }
+        catch(e){
+          commit('setError',e);
+          throw e
+        }
+      }, 
+      async fetchCategoryById({dispatch,commit},id){
+        try{
+          const userId = await dispatch('getUid');
+          const category = (await firebase.database().ref(`/users/${userId}/categories`).child(id).once('value')).val();
+          if(category)
+          return {...category,id};
           else
           return []
         }
