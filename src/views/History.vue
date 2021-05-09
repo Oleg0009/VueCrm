@@ -8,9 +8,17 @@
     <canvas></canvas>
   </div>
   <Loader v-if="loading"/>
-  <p v-else-if="!categories.length" class="center">No categories yet.<router-link to="/categories"> Add new category</router-link></p>
+  <p v-else-if="!items.length" class="center">No categories yet.<router-link to="/categories"> Add new category</router-link></p>
   <section v-else>
-      <HistoryTable :records="records"/>
+      <HistoryTable :records="items"/>
+      <Paginate
+        v-model="page"
+        :pageCount="pageCount"
+        :clickHandler="paginateHandler"
+        :prevText="'Prev'"
+        :nextText="'Next'"
+        :containerClass="'pagination'"
+        :page-class="'waves-effect'"/>
   </section>
 </div>
 
@@ -18,27 +26,34 @@
 
 
 <script>
+import paginationMixin from '@/mixins/pagination.mixin';
 import HistoryTable from "@/components/HistoryTable";
 import Loader from '@/components/apps/Loader';
 export default {
+  mixins:[paginationMixin],
   data:()=>({
-    categories:[],
     records:[],
     loading:true
   }),
   async mounted(){
-    this.categories = await this.$store.dispatch('fetchCategories');
-    const records = await this.$store.dispatch('fetchRecords');
-    console.log(records)
-    this.records = records.map((record,indx)=>{
-      return{
-        ...record,
-        categoryName: this.categories.find(c => c.id === record.categoryId).title,
-        typeClass: record.type === "outcome" ? "red" : "green",
-        typeText: record.type === "outcome" ? "Outcome" : "Income"
-      }
-    })
-    this.loading = false;
+    this.records = await this.$store.dispatch('fetchRecords');
+    const categories = await this.$store.dispatch('fetchCategories');
+
+    this.setupPagination(this.records.map((record)=>{
+        return{
+          ...record,
+          categoryName: categories.find(c => c.id === record.categoryId).title,
+          typeClass: record.type === "outcome" ? "red" : "green",
+          typeText: record.type === "outcome" ? "Outcome" : "Income"
+        }
+      })) 
+      this.loading = false;
+  },
+  methods:{
+    paginateHandler(page){
+        this.$router.push(`${this.$route.path}?page=${page}`);
+        this.items= this.allItems[page - 1] || this.allItems[0];
+    }
   },
   components:{
     HistoryTable,

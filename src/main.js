@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuelidate from "vuelidate";
+import Paginate from 'vuejs-paginate'
 import App from "./App.vue";
 import "./registerServiceWorker";
 import dataFilter from "@/filters/data.filter";
@@ -22,6 +23,7 @@ Vue.filter('currency',currencyFilter);
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
 Vue.component('Loader',loader);
+Vue.component('Paginate',Paginate);
 Vue.directive('tooltip',tooltipDirectives)
 
 
